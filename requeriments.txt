@@ -1,2 +1,2 @@
 robobrowser
-termcolor
+werkzeug==0.16.0
